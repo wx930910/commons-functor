@@ -16,20 +16,24 @@
  */
 package org.apache.commons.functor.example.lines;
 
-import org.apache.commons.functor.Predicate;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import org.apache.commons.functor.Predicate;
 
 /**
  * @version $Revision$ $Date$
  */
-public class StartsWith<T> implements Predicate<T> {
-    public StartsWith(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public boolean test(T obj) {
-        return null != obj && obj.toString().startsWith(prefix);
-    }
-
-    private String prefix = null;
+public class StartsWith {
+	public static Predicate<String> mockPredicate1(String prefix) {
+		String[] mockFieldVariablePrefix = new String[] { null };
+		Predicate<String> mockInstance = mock(Predicate.class);
+		mockFieldVariablePrefix[0] = prefix;
+		when(mockInstance.test(any(String.class))).thenAnswer((stubInvo) -> {
+			String obj = stubInvo.getArgument(0);
+			return null != obj && obj.toString().startsWith(mockFieldVariablePrefix[0]);
+		});
+		return mockInstance;
+	}
 }

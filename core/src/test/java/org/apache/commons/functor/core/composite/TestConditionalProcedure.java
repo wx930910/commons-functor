@@ -18,6 +18,10 @@ package org.apache.commons.functor.core.composite;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.apache.commons.functor.BaseFunctorTest;
 import org.apache.commons.functor.Procedure;
@@ -31,77 +35,57 @@ import org.junit.Test;
  */
 public class TestConditionalProcedure extends BaseFunctorTest {
 
-    // Functor Testing Framework
-    // ------------------------------------------------------------------------
+	// Functor Testing Framework
+	// ------------------------------------------------------------------------
 
-    @Override
-    protected Object makeFunctor() {
-        return new ConditionalProcedure<Object>(
-            Constant.TRUE,
-            NoOp.INSTANCE,
-            NoOp.INSTANCE);
-    }
+	public static Procedure<Object> mockProcedure1() {
+		Procedure<Object> mockInstance = mock(Procedure.class);
+		return mockInstance;
+	}
 
-    // Tests
-    // ------------------------------------------------------------------------
+	@Override
+	protected Object makeFunctor() {
+		return new ConditionalProcedure<Object>(Constant.TRUE, NoOp.INSTANCE, NoOp.INSTANCE);
+	}
 
-    @Test
-    public void testRun() throws Exception {
-        RunCounter left = new RunCounter();
-        RunCounter right = new RunCounter();
-        ConditionalProcedure<Object> p = new ConditionalProcedure<Object>(
-            Identity.INSTANCE,
-            left,
-            right);
-        assertEquals(0,left.count);
-        assertEquals(0,right.count);
-        p.run(Boolean.TRUE);
-        assertEquals(1,left.count);
-        assertEquals(0,right.count);
-        p.run(Boolean.FALSE);
-        assertEquals(1,left.count);
-        assertEquals(1,right.count);
-        p.run(Boolean.TRUE);
-        assertEquals(2,left.count);
-        assertEquals(1,right.count);
-    }
+	// Tests
+	// ------------------------------------------------------------------------
 
-    @Test
-    public void testEquals() throws Exception {
-        ConditionalProcedure<Object> p = new ConditionalProcedure<Object>(
-            Identity.INSTANCE,
-            NoOp.INSTANCE,
-            NoOp.INSTANCE);
-        assertEquals(p,p);
-        assertObjectsAreEqual(p,new ConditionalProcedure<Object>(
-            Identity.INSTANCE,
-            NoOp.INSTANCE,
-            NoOp.INSTANCE));
-        assertObjectsAreNotEqual(p,new ConditionalProcedure<Object>(
-            Constant.TRUE,
-            NoOp.INSTANCE,
-            NoOp.INSTANCE));
-        assertObjectsAreNotEqual(p,new ConditionalProcedure<Object>(
-            Identity.INSTANCE,
-            new RunCounter(),
-            NoOp.INSTANCE));
-        assertObjectsAreNotEqual(p,new ConditionalProcedure<Object>(
-            Identity.INSTANCE,
-            NoOp.INSTANCE,
-            new RunCounter()));
-        assertObjectsAreNotEqual(p, new ConditionalProcedure<Object>(
-            Constant.TRUE,
-            new RunCounter()));
-        assertTrue(!p.equals(null));
-    }
+	@Test
+	public void testRun() throws Exception {
+		Procedure<Object> left = mock(Procedure.class);
+		Procedure<Object> right = mock(Procedure.class);
+		ConditionalProcedure<Object> p = new ConditionalProcedure<Object>(Identity.INSTANCE, left, right);
+		verify(left, times(0)).run(any());
+		verify(right, times(0)).run(any());
+		p.run(Boolean.TRUE);
+		verify(left, times(1)).run(any());
+		verify(right, times(0)).run(any());
+		p.run(Boolean.FALSE);
+		verify(left, times(1)).run(any());
+		verify(right, times(1)).run(any());
+		p.run(Boolean.TRUE);
+		verify(left, times(2)).run(any());
+		verify(right, times(1)).run(any());
+	}
 
-    // Classes
-    // ------------------------------------------------------------------------
+	@Test
+	public void testEquals() throws Exception {
+		ConditionalProcedure<Object> p = new ConditionalProcedure<Object>(Identity.INSTANCE, NoOp.INSTANCE,
+				NoOp.INSTANCE);
+		assertEquals(p, p);
+		assertObjectsAreEqual(p, new ConditionalProcedure<Object>(Identity.INSTANCE, NoOp.INSTANCE, NoOp.INSTANCE));
+		assertObjectsAreNotEqual(p, new ConditionalProcedure<Object>(Constant.TRUE, NoOp.INSTANCE, NoOp.INSTANCE));
+		assertObjectsAreNotEqual(p, new ConditionalProcedure<Object>(Identity.INSTANCE,
+				TestConditionalProcedure.mockProcedure1(), NoOp.INSTANCE));
+		assertObjectsAreNotEqual(p, new ConditionalProcedure<Object>(Identity.INSTANCE, NoOp.INSTANCE,
+				TestConditionalProcedure.mockProcedure1()));
+		assertObjectsAreNotEqual(p,
+				new ConditionalProcedure<Object>(Constant.TRUE, TestConditionalProcedure.mockProcedure1()));
+		assertTrue(!p.equals(null));
+	}
 
-    static class RunCounter implements Procedure<Object> {
-        public void run(Object obj) {
-            count++;
-        }
-        public int count = 0;
-    }
+	// Classes
+	// ------------------------------------------------------------------------
+
 }

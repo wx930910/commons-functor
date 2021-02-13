@@ -16,6 +16,10 @@
  */
 package org.apache.commons.functor.example.map;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
@@ -32,182 +36,181 @@ import org.apache.commons.functor.Procedure;
  */
 @SuppressWarnings("unchecked")
 public class FunctoredMap<K, V> implements Map<K, V> {
-    public FunctoredMap(Map<? super K, ? super V> map) {
-        this.map = (Map<K, V>)map;
-    }
+	public static Predicate<Object> mockPredicate1(Map<?, ?> map) {
+		Map<?, ?>[] mockFieldVariableMap = new Map[] { null };
+		Predicate<Object> mockInstance = mock(Predicate.class);
+		mockFieldVariableMap[0] = map;
+		when(mockInstance.test(any(Object.class))).thenAnswer((stubInvo) -> {
+			Object obj = stubInvo.getArgument(0);
+			return mockFieldVariableMap[0].containsKey(obj);
+		});
+		return mockInstance;
+	}
 
-    @Override
-    public int hashCode() {
-        return map.hashCode();
-    }
+	public FunctoredMap(Map<? super K, ? super V> map) {
+		this.map = (Map<K, V>) map;
+	}
 
-    @Override
-    public String toString() {
-        return map.toString();
-    }
+	@Override
+	public int hashCode() {
+		return map.hashCode();
+	}
 
-    public Collection<V> values() {
-        return map.values();
-    }
+	@Override
+	public String toString() {
+		return map.toString();
+	}
 
-    public Set<K> keySet() {
-        return map.keySet();
-    }
+	public Collection<V> values() {
+		return map.values();
+	}
 
-    public V get(Object key) {
-        return onget.evaluate(map, (K)key);
-    }
+	public Set<K> keySet() {
+		return map.keySet();
+	}
 
-    public void clear() {
-        onclear.run(map);
-    }
+	public V get(Object key) {
+		return onget.evaluate(map, (K) key);
+	}
 
-    public int size() {
-        return map.size();
-    }
+	public void clear() {
+		onclear.run(map);
+	}
 
-    public Object put(Object key, Object value) {
-        return onput.evaluate(map, new Object[] { key, value });
-    }
+	public int size() {
+		return map.size();
+	}
 
-    public void putAll(Map<? extends K, ? extends V> src) {
-        onputall.run(map, (Map<K, V>)src);
-    }
+	public Object put(Object key, Object value) {
+		return onput.evaluate(map, new Object[] { key, value });
+	}
 
-    public Set<Map.Entry<K, V>> entrySet() {
-        return map.entrySet();
-    }
+	public void putAll(Map<? extends K, ? extends V> src) {
+		onputall.run(map, (Map<K, V>) src);
+	}
 
-    public boolean containsKey(Object key) {
-        return map.containsKey(key);
-    }
+	public Set<Map.Entry<K, V>> entrySet() {
+		return map.entrySet();
+	}
 
-    public boolean isEmpty() {
-        return map.isEmpty();
-    }
+	public boolean containsKey(Object key) {
+		return map.containsKey(key);
+	}
 
-    public V remove(Object key) {
-        return onremove.evaluate(map, (K)key);
-    }
+	public boolean isEmpty() {
+		return map.isEmpty();
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        return map.equals(obj);
-    }
+	public V remove(Object key) {
+		return onremove.evaluate(map, (K) key);
+	}
 
-    public boolean containsValue(Object value) {
-        return map.containsValue(value);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		return map.equals(obj);
+	}
 
-    // protected
+	public boolean containsValue(Object value) {
+		return map.containsValue(value);
+	}
 
-    protected void setOnClear(Procedure<Map<K, V>> procedure) {
-        onclear = procedure;
-    }
+	// protected
 
-    protected void setOnPut(BinaryFunction<Map<K, V>, Object[], V> function) {
-        onput = function;
-    }
+	protected void setOnClear(Procedure<Map<K, V>> procedure) {
+		onclear = procedure;
+	}
 
-    protected void setOnGet(BinaryFunction<Map<K, V>, K, V> function) {
-        onget = function;
-    }
+	protected void setOnPut(BinaryFunction<Map<K, V>, Object[], V> function) {
+		onput = function;
+	}
 
-    protected void setOnPutAll(BinaryProcedure<Map<K, V>, Map<K, V>> procedure) {
-        onputall = procedure;
-    }
+	protected void setOnGet(BinaryFunction<Map<K, V>, K, V> function) {
+		onget = function;
+	}
 
-    protected void setOnRemove(BinaryFunction<Map<K, V>, K, V> function) {
-        onremove = function;
-    }
+	protected void setOnPutAll(BinaryProcedure<Map<K, V>, Map<K, V>> procedure) {
+		onputall = procedure;
+	}
 
-    // attributes
+	protected void setOnRemove(BinaryFunction<Map<K, V>, K, V> function) {
+		onremove = function;
+	}
 
-    protected BinaryFunction<Map<K, V>, Object[], V> DEFAULT_ON_PUT = new BinaryFunction<Map<K, V>, Object[], V>() {
-        public V evaluate(Map<K, V> a, Object[] b) {
-            Map<K, V> map = a;
-            K key = (K)Array.get(b,0);
-            V value = (V)Array.get(b,1);
-            return map.put(key,value);
-        }
-    };
+	// attributes
 
-    private BinaryFunction<Map<K, V>, Object[], V> onput = DEFAULT_ON_PUT;
+	protected BinaryFunction<Map<K, V>, Object[], V> DEFAULT_ON_PUT = new BinaryFunction<Map<K, V>, Object[], V>() {
+		public V evaluate(Map<K, V> a, Object[] b) {
+			Map<K, V> map = a;
+			K key = (K) Array.get(b, 0);
+			V value = (V) Array.get(b, 1);
+			return map.put(key, value);
+		}
+	};
 
-    protected BinaryFunction<Map<K, V>, K, V> DEFAULT_ON_GET = new BinaryFunction<Map<K, V>, K, V>() {
-        public V evaluate(Map<K, V> map, K key) {
-            return map.get(key);
-        }
-    };
+	private BinaryFunction<Map<K, V>, Object[], V> onput = DEFAULT_ON_PUT;
 
-    private BinaryFunction<Map<K, V>, K, V> onget = DEFAULT_ON_GET;
-    
-    protected BinaryProcedure<Map<K, V>, Map<K, V>> DEFAULT_ON_PUT_ALL = new BinaryProcedure<Map<K, V>, Map<K, V>>() {
-        public void run(Map<K, V> a, Map<K, V> b) {
-            Map<K, V> dest = a;
-            Map<K, V> src = b;
-            dest.putAll(src);
-        }
-    };
+	protected BinaryFunction<Map<K, V>, K, V> DEFAULT_ON_GET = new BinaryFunction<Map<K, V>, K, V>() {
+		public V evaluate(Map<K, V> map, K key) {
+			return map.get(key);
+		}
+	};
 
-    private BinaryProcedure<Map<K, V>, Map<K, V>> onputall = DEFAULT_ON_PUT_ALL;
+	private BinaryFunction<Map<K, V>, K, V> onget = DEFAULT_ON_GET;
 
-    protected BinaryFunction<Map<K, V>, K, V> DEFAULT_ON_REMOVE = new BinaryFunction<Map<K, V>, K, V>() {
-        public V evaluate(Map<K, V> a, K key) {
-            Map<K, V> map = a;
-            return map.remove(key);
-        }
-    };
+	protected BinaryProcedure<Map<K, V>, Map<K, V>> DEFAULT_ON_PUT_ALL = new BinaryProcedure<Map<K, V>, Map<K, V>>() {
+		public void run(Map<K, V> a, Map<K, V> b) {
+			Map<K, V> dest = a;
+			Map<K, V> src = b;
+			dest.putAll(src);
+		}
+	};
 
-    private BinaryFunction<Map<K, V>, K, V> onremove = DEFAULT_ON_REMOVE;
+	private BinaryProcedure<Map<K, V>, Map<K, V>> onputall = DEFAULT_ON_PUT_ALL;
 
-    protected Procedure<Map<K, V>> DEFAULT_ON_CLEAR = new Procedure<Map<K, V>>() {
-        public void run(Map<K, V> map) {
-            map.clear();
-        }
-    };
+	protected BinaryFunction<Map<K, V>, K, V> DEFAULT_ON_REMOVE = new BinaryFunction<Map<K, V>, K, V>() {
+		public V evaluate(Map<K, V> a, K key) {
+			Map<K, V> map = a;
+			return map.remove(key);
+		}
+	};
 
-    private Procedure<Map<K, V>> onclear = DEFAULT_ON_CLEAR;
+	private BinaryFunction<Map<K, V>, K, V> onremove = DEFAULT_ON_REMOVE;
 
-    private Map<K, V> map = null;
+	protected Procedure<Map<K, V>> DEFAULT_ON_CLEAR = new Procedure<Map<K, V>>() {
+		public void run(Map<K, V> map) {
+			map.clear();
+		}
+	};
 
-    // inner classes
+	private Procedure<Map<K, V>> onclear = DEFAULT_ON_CLEAR;
 
-    protected static class ContainsKey implements Predicate<Object> {
-        ContainsKey(Map<?, ?> map) {
-            this.map = map;
-        }
+	private Map<K, V> map = null;
 
-        public boolean test(Object obj) {
-            return map.containsKey(obj);
-        }
+	// inner classes
 
-        private Map<?, ?> map = null;
-    }
+	protected static class Throw<K, V> implements NullaryProcedure, Procedure<Map<K, V>>, BinaryProcedure<K, V> {
+		Throw(RuntimeException e) {
+			this.klass = e.getClass();
+		}
 
-    protected static class Throw<K, V> implements NullaryProcedure, Procedure<Map<K, V>>, BinaryProcedure<K, V> {
-        Throw(RuntimeException e) {
-            this.klass = e.getClass();
-        }
+		public void run() {
+			try {
+				throw (RuntimeException) (klass.newInstance());
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException();
+			} catch (InstantiationException e) {
+				throw new RuntimeException();
+			}
+		}
 
-        public void run() {
-            try {
-                throw (RuntimeException)(klass.newInstance());
-            } catch(IllegalAccessException e) {
-                throw new RuntimeException();
-            } catch (InstantiationException e) {
-                throw new RuntimeException();
-            }
-        }
+		public void run(Map<K, V> obj) {
+			run();
+		}
 
-        public void run(Map<K, V> obj) {
-            run();
-        }
+		public void run(K a, V b) {
+			run();
+		}
 
-        public void run(K a, V b) {
-            run();
-        }
-
-        private Class<?> klass = null;
-    }
+		private Class<?> klass = null;
+	}
 }
