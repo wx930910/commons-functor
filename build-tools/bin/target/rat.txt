@@ -1,0 +1,31 @@
+
+*****************************************************
+Summary
+-------
+Generated at: 2021-02-21T13:29:22-05:00
+
+Notes: 0
+Binaries: 0
+Archives: 0
+Standards: 5
+
+Apache Licensed: 5
+Generated Documents: 0
+
+JavaDocs are generated, thus a license header is optional.
+Generated files do not require license headers.
+
+0 Unknown Licenses
+
+*****************************************************
+  Files with Apache License headers will be marked AL
+  Binary files (which do not require any license headers) will be marked B
+  Compressed archives will be marked A
+  Notices, licenses etc. will be marked N
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/pom.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/checkstyle-suppressions.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/checkstyle.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/fb-excludes.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/license-header.txt
+ 
+*****************************************************

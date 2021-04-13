@@ -20,6 +20,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
 
 import org.apache.commons.functor.BaseFunctorTest;
 import org.apache.commons.functor.BinaryProcedure;
@@ -31,59 +34,59 @@ import org.junit.Test;
  */
 public class TestTransposedProcedure extends BaseFunctorTest {
 
-    // Functor Testing Framework
-    // ------------------------------------------------------------------------
+	// Functor Testing Framework
+	// ------------------------------------------------------------------------
 
-    @Override
-    protected Object makeFunctor() {
-        return new TransposedProcedure<Object, Object>(NoOp.INSTANCE);
-    }
+	@Override
+	protected Object makeFunctor() {
+		return new TransposedProcedure<Object, Object>(NoOp.INSTANCE);
+	}
 
-    // Tests
-    // ------------------------------------------------------------------------
+	// Tests
+	// ------------------------------------------------------------------------
 
-    @Test
-    public void testEvaluate() throws Exception {
-        LeftNotNullCounter counter = new LeftNotNullCounter();
-        BinaryProcedure<Object, Object> p = new TransposedProcedure<Object, Object>(counter);
-        assertEquals(0,counter.count);
-        p.run(null,"not null");
-        assertEquals(1,counter.count);
-        p.run("not null",null);
-        assertEquals(1,counter.count);
-    }
+	@Test
+	public void testEvaluate() throws Exception {
+		BinaryProcedure<Object, Object> counter = mock(BinaryProcedure.class);
+		int[] counterCount = new int[] { 0 };
+		doAnswer((stubInvo) -> {
+			Object a = stubInvo.getArgument(0);
+			if (null != a) {
+				counterCount[0]++;
+			}
+			return null;
+		}).when(counter).run(any(), any());
+		BinaryProcedure<Object, Object> p = new TransposedProcedure<Object, Object>(counter);
+		assertEquals(0, counterCount[0]);
+		p.run(null, "not null");
+		assertEquals(1, counterCount[0]);
+		p.run("not null", null);
+		assertEquals(1, counterCount[0]);
+	}
 
-    @Test
-    public void testEquals() throws Exception {
-        BinaryProcedure<Object, Object> p = new TransposedProcedure<Object, Object>(NoOp.INSTANCE);
-        assertEquals(p,p);
-        assertObjectsAreEqual(p,new TransposedProcedure<Object, Object>(NoOp.INSTANCE));
-        assertObjectsAreEqual(p,TransposedProcedure.transpose(NoOp.INSTANCE));
-        assertObjectsAreNotEqual(p,new TransposedProcedure<Object, Object>(new TransposedProcedure<Object, Object>(NoOp.INSTANCE)));
-        assertObjectsAreNotEqual(p,NoOp.INSTANCE);
-        assertTrue(!p.equals((TransposedProcedure<?, ?>)null));
-    }
+	@Test
+	public void testEquals() throws Exception {
+		BinaryProcedure<Object, Object> p = new TransposedProcedure<Object, Object>(NoOp.INSTANCE);
+		assertEquals(p, p);
+		assertObjectsAreEqual(p, new TransposedProcedure<Object, Object>(NoOp.INSTANCE));
+		assertObjectsAreEqual(p, TransposedProcedure.transpose(NoOp.INSTANCE));
+		assertObjectsAreNotEqual(p,
+				new TransposedProcedure<Object, Object>(new TransposedProcedure<Object, Object>(NoOp.INSTANCE)));
+		assertObjectsAreNotEqual(p, NoOp.INSTANCE);
+		assertTrue(!p.equals((TransposedProcedure<?, ?>) null));
+	}
 
-    @Test
-    public void testTransposeNull() throws Exception {
-        assertNull(TransposedProcedure.transpose(null));
-    }
+	@Test
+	public void testTransposeNull() throws Exception {
+		assertNull(TransposedProcedure.transpose(null));
+	}
 
-    @Test
-    public void testTranspose() throws Exception {
-        assertNotNull(TransposedProcedure.transpose(NoOp.INSTANCE));
-    }
+	@Test
+	public void testTranspose() throws Exception {
+		assertNotNull(TransposedProcedure.transpose(NoOp.INSTANCE));
+	}
 
-    // Classes
-    // ------------------------------------------------------------------------
-
-    static class LeftNotNullCounter implements BinaryProcedure<Object, Object> {
-        public void run(Object a, Object b) {
-            if (null != a) {
-                count++;
-            }
-        }
-        public int count = 0;
-    }
+	// Classes
+	// ------------------------------------------------------------------------
 
 }

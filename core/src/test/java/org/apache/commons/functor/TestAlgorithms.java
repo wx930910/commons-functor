@@ -20,6 +20,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,161 +48,165 @@ import org.junit.Test;
  */
 public class TestAlgorithms {
 
-    // Lifecycle
-    // ------------------------------------------------------------------------
+	// Lifecycle
+	// ------------------------------------------------------------------------
 
-    @Before
-    public void setUp() throws Exception {
-        list = new ArrayList<Integer>();
-        evens = new ArrayList<Integer>();
-        doubled = new ArrayList<Integer>();
-        listWithDuplicates = new ArrayList<Integer>();
-        sum = 0;
-        for (int i = 0; i < 10; i++) {
-            list.add(Integer.valueOf(i));
-            doubled.add(Integer.valueOf(i * 2));
-            listWithDuplicates.add(Integer.valueOf(i));
-            listWithDuplicates.add(Integer.valueOf(i));
-            sum += i;
-            if (i % 2 == 0) {
-                evens.add(Integer.valueOf(i));
-            }
-        }
-    }
+	public static Function<Integer, Integer> mockFunction1() {
+		Function<Integer, Integer> mockInstance = mock(Function.class);
+		when(mockInstance.evaluate(any(Integer.class))).thenAnswer((stubInvo) -> {
+			Integer obj = stubInvo.getArgument(0);
+			return Integer.valueOf(2 * obj.intValue());
+		});
+		return mockInstance;
+	}
 
-    @After
-    public void tearDown() throws Exception {
-        list = null;
-        evens = null;
-        listWithDuplicates = null;
-        sum = 0;
-    }
+	@Before
+	public void setUp() throws Exception {
+		list = new ArrayList<Integer>();
+		evens = new ArrayList<Integer>();
+		doubled = new ArrayList<Integer>();
+		listWithDuplicates = new ArrayList<Integer>();
+		sum = 0;
+		for (int i = 0; i < 10; i++) {
+			list.add(Integer.valueOf(i));
+			doubled.add(Integer.valueOf(i * 2));
+			listWithDuplicates.add(Integer.valueOf(i));
+			listWithDuplicates.add(Integer.valueOf(i));
+			sum += i;
+			if (i % 2 == 0) {
+				evens.add(Integer.valueOf(i));
+			}
+		}
+	}
 
-    // Tests
-    // ------------------------------------------------------------------------
+	@After
+	public void tearDown() throws Exception {
+		list = null;
+		evens = null;
+		listWithDuplicates = null;
+		sum = 0;
+	}
 
-    @Test
-    public void testRun() {
-        Summer summer = new Summer();
-        IteratorToGeneratorAdapter.adapt(list.iterator()).run(summer);
-        assertEquals(sum, summer.sum);
-    }
+	// Tests
+	// ------------------------------------------------------------------------
 
-    @Test
-    public void testSelect1() {
-        Collection<Integer> result =
-            new FilteredGenerator<Integer>(IteratorToGeneratorAdapter.adapt(list.iterator()), isEven).toCollection();
-        assertNotNull(result);
-        assertEquals(evens, result);
-    }
+	@Test
+	public void testRun() {
+		Procedure<Integer> summer = mock(Procedure.class);
+		int[] summerSum = new int[] { 0 };
+		doAnswer((stubInvo) -> {
+			Integer that = stubInvo.getArgument(0);
+			summerSum[0] += that.intValue();
+			return null;
+		}).when(summer).run(any());
+		IteratorToGeneratorAdapter.adapt(list.iterator()).run(summer);
+		assertEquals(sum, summerSum[0]);
+	}
 
-    @Test
-    public void testSelect2() {
-        List<Integer> result = new ArrayList<Integer>();
-        assertSame(result,
-            new FilteredGenerator<Integer>(IteratorToGeneratorAdapter.adapt(list.iterator()), isEven).to(result));
-        assertEquals(evens, result);
-    }
+	@Test
+	public void testSelect1() {
+		Collection<Integer> result = new FilteredGenerator<Integer>(IteratorToGeneratorAdapter.adapt(list.iterator()),
+				isEven).toCollection();
+		assertNotNull(result);
+		assertEquals(evens, result);
+	}
 
-    @Test
-    public void testReject1() {
-        Collection<Integer> result =
-            new FilteredGenerator<Integer>(IteratorToGeneratorAdapter.adapt(list.iterator()), new Not<Integer>(isOdd))
-                .toCollection();
-        assertNotNull(result);
-        assertEquals(evens, result);
-    }
+	@Test
+	public void testSelect2() {
+		List<Integer> result = new ArrayList<Integer>();
+		assertSame(result,
+				new FilteredGenerator<Integer>(IteratorToGeneratorAdapter.adapt(list.iterator()), isEven).to(result));
+		assertEquals(evens, result);
+	}
 
-    @Test
-    public void testReject2() {
-        List<Object> result = new ArrayList<Object>();
-        assertSame(result, new FilteredGenerator<Integer>(IteratorToGeneratorAdapter.adapt(list.iterator()),
-            new Not<Integer>(isOdd)).to(result));
-        assertEquals(evens, result);
-    }
+	@Test
+	public void testReject1() {
+		Collection<Integer> result = new FilteredGenerator<Integer>(IteratorToGeneratorAdapter.adapt(list.iterator()),
+				new Not<Integer>(isOdd)).toCollection();
+		assertNotNull(result);
+		assertEquals(evens, result);
+	}
 
-    @Test
-    public void testApplyToGenerator() {
-        LoopGenerator<Integer> gen = IteratorToGeneratorAdapter.adapt(new IntegerRange(1, 5));
-        Summer summer = new Summer();
+	@Test
+	public void testReject2() {
+		List<Object> result = new ArrayList<Object>();
+		assertSame(result, new FilteredGenerator<Integer>(IteratorToGeneratorAdapter.adapt(list.iterator()),
+				new Not<Integer>(isOdd)).to(result));
+		assertEquals(evens, result);
+	}
 
-        new TransformedGenerator<Integer, Integer>(gen, new Doubler()).run(summer);
+	@Test
+	public void testApplyToGenerator() {
+		LoopGenerator<Integer> gen = IteratorToGeneratorAdapter.adapt(new IntegerRange(1, 5));
+		Procedure<Integer> summer = mock(Procedure.class);
+		int[] summerSum = new int[] { 0 };
+		doAnswer((stubInvo) -> {
+			Integer that = stubInvo.getArgument(0);
+			summerSum[0] += that.intValue();
+			return null;
+		}).when(summer).run(any());
 
-        assertEquals(2 * (1 + 2 + 3 + 4), summer.sum);
-    }
+		new TransformedGenerator<Integer, Integer>(gen, TestAlgorithms.mockFunction1()).run(summer);
 
-    @Test
-    public void testApply() {
-        Collection<Integer> result =
-            new TransformedGenerator<Integer, Integer>(IteratorToGeneratorAdapter.adapt(list.iterator()), new Doubler())
-                .toCollection();
-        assertNotNull(result);
-        assertEquals(doubled, result);
-    }
+		assertEquals(2 * (1 + 2 + 3 + 4), summerSum[0]);
+	}
 
-    @Test
-    public void testApply2() {
-        Set<Integer> set = new HashSet<Integer>();
-        assertSame(set, new TransformedGenerator<Integer, Integer>(IteratorToGeneratorAdapter.adapt(list.iterator()),
-            Identity.<Integer> instance()).to(set));
-        assertEquals(list.size(), set.size());
-        for (Iterator<Integer> iter = list.iterator(); iter.hasNext();) {
-            assertTrue(set.contains(iter.next()));
-        }
-    }
+	@Test
+	public void testApply() {
+		Collection<Integer> result = new TransformedGenerator<Integer, Integer>(
+				IteratorToGeneratorAdapter.adapt(list.iterator()), TestAlgorithms.mockFunction1()).toCollection();
+		assertNotNull(result);
+		assertEquals(doubled, result);
+	}
 
-    @Test
-    public void testApply3() {
-        Set<Object> set = new HashSet<Object>();
-        assertSame(set,
-            new TransformedGenerator<Object, Object>(IteratorToGeneratorAdapter.adapt(listWithDuplicates.iterator()),
-                Identity.instance()).to(set));
-        assertTrue(listWithDuplicates.size() > set.size());
-        for (Iterator<Integer> iter = listWithDuplicates.iterator(); iter.hasNext();) {
-            assertTrue(set.contains(iter.next()));
-        }
-    }
+	@Test
+	public void testApply2() {
+		Set<Integer> set = new HashSet<Integer>();
+		assertSame(set, new TransformedGenerator<Integer, Integer>(IteratorToGeneratorAdapter.adapt(list.iterator()),
+				Identity.<Integer>instance()).to(set));
+		assertEquals(list.size(), set.size());
+		for (Iterator<Integer> iter = list.iterator(); iter.hasNext();) {
+			assertTrue(set.contains(iter.next()));
+		}
+	}
 
-    // Attributes
-    // ------------------------------------------------------------------------
-    private List<Integer> list = null;
-    private List<Integer> doubled = null;
-    private List<Integer> evens = null;
-    private List<Integer> listWithDuplicates = null;
-    private int sum = 0;
-    private Predicate<Integer> isEven = new Predicate<Integer>() {
-        public boolean test(Integer obj) {
-            return obj.intValue() % 2 == 0;
-        }
-    };
-    private Predicate<Integer> isOdd = new Predicate<Integer>() {
-        public boolean test(Integer obj) {
-            return obj.intValue() % 2 != 0;
-        }
-    };
+	@Test
+	public void testApply3() {
+		Set<Object> set = new HashSet<Object>();
+		assertSame(set, new TransformedGenerator<Object, Object>(
+				IteratorToGeneratorAdapter.adapt(listWithDuplicates.iterator()), Identity.instance()).to(set));
+		assertTrue(listWithDuplicates.size() > set.size());
+		for (Iterator<Integer> iter = listWithDuplicates.iterator(); iter.hasNext();) {
+			assertTrue(set.contains(iter.next()));
+		}
+	}
 
-    // Classes
-    // ------------------------------------------------------------------------
+	// Attributes
+	// ------------------------------------------------------------------------
+	private List<Integer> list = null;
+	private List<Integer> doubled = null;
+	private List<Integer> evens = null;
+	private List<Integer> listWithDuplicates = null;
+	private int sum = 0;
+	private Predicate<Integer> isEven = new Predicate<Integer>() {
+		public boolean test(Integer obj) {
+			return obj.intValue() % 2 == 0;
+		}
+	};
+	private Predicate<Integer> isOdd = new Predicate<Integer>() {
+		public boolean test(Integer obj) {
+			return obj.intValue() % 2 != 0;
+		}
+	};
 
-    static class Counter implements NullaryProcedure {
-        public void run() {
-            count++;
-        }
+	// Classes
+	// ------------------------------------------------------------------------
 
-        public int count = 0;
-    }
+	static class Counter implements NullaryProcedure {
+		public void run() {
+			count++;
+		}
 
-    static class Summer implements Procedure<Integer> {
-        public void run(Integer that) {
-            sum += that.intValue();
-        }
-
-        public int sum = 0;
-    }
-
-    static class Doubler implements Function<Integer, Integer> {
-        public Integer evaluate(Integer obj) {
-            return Integer.valueOf(2 * obj.intValue());
-        }
-    }
+		public int count = 0;
+	}
 }

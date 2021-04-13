@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1614058907279
+Build-Jdk-Spec: 12
+Bundle-Description: Provide common setup, from http://maven.apache.org/p
+ lugins/maven-checkstyle-plugin/examples/multi-module-config.html
+Bundle-DocURL: http://commons.apache.org/proper/commons-functor/commons-
+ functor-build-tools/
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: Apache Commons Functor Build Tools
+Bundle-SymbolicName: org.apache.commons.commons-functor-build-tools
+Bundle-Vendor: The Apache Software Foundation
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.apache.commons.functor;version="1.0.0.SNAPSHOT"
+Include-Resource: org/apache/commons/functor/checkstyle-suppressions.xml
+ =src/main/resources/org/apache/commons/functor/checkstyle-suppressions.
+ xml,org/apache/commons/functor/checkstyle.xml=src/main/resources/org/ap
+ ache/commons/functor/checkstyle.xml,org/apache/commons/functor/fb-exclu
+ des.xml=src/main/resources/org/apache/commons/functor/fb-excludes.xml,o
+ rg/apache/commons/functor/license-header.txt=src/main/resources/org/apa
+ che/commons/functor/license-header.txt
+Tool: Bnd-5.1.2.202007211702

@@ -20,6 +20,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.apache.commons.functor.BaseFunctorTest;
 import org.apache.commons.functor.BinaryPredicate;
@@ -31,52 +34,56 @@ import org.junit.Test;
  */
 public class TestBinaryNot extends BaseFunctorTest {
 
-    // Functor Testing Framework
-    // ------------------------------------------------------------------------
+	// Functor Testing Framework
+	// ------------------------------------------------------------------------
 
-    @Override
-    protected Object makeFunctor() {
-        return new BinaryNot<Object, Object>(Constant.TRUE);
-    }
+	public BinaryPredicate<Integer, Integer> mockBinaryPredicate1() {
+		BinaryPredicate<Integer, Integer> mockInstance = mock(BinaryPredicate.class);
+		when(mockInstance.test(any(Integer.class), any(Integer.class))).thenAnswer((stubInvo) -> {
+			Integer left = stubInvo.getArgument(0);
+			Integer right = stubInvo.getArgument(1);
+			return left + right > 10;
+		});
+		return mockInstance;
+	}
 
-    // Tests
-    // ------------------------------------------------------------------------
+	@Override
+	protected Object makeFunctor() {
+		return new BinaryNot<Object, Object>(Constant.TRUE);
+	}
 
-    @Test
-    public void testTest() throws Exception {
-        BinaryPredicate<Integer, Integer> p = new BinaryNot<Integer, Integer>(new IsSumGreaterThanTen());
-        assertTrue(!p.test(9, 2));
-        assertTrue(p.test(9, 1));
-    }
+	// Tests
+	// ------------------------------------------------------------------------
 
-    @Test
-    public void testEquals() throws Exception {
-        BinaryNot<Object, Object> p = new BinaryNot<Object, Object>(Constant.TRUE);
-        assertEquals(p,p);
-        assertObjectsAreEqual(p,new BinaryNot<Object, Object>(Constant.TRUE));
-        assertObjectsAreEqual(p,BinaryNot.not(Constant.TRUE));
-        assertObjectsAreNotEqual(p,new BinaryNot<Object, Object>(Constant.FALSE));
-        assertObjectsAreNotEqual(p,Constant.TRUE);
-        assertTrue(!p.equals(null));
-    }
+	@Test
+	public void testTest() throws Exception {
+		BinaryPredicate<Integer, Integer> p = new BinaryNot<Integer, Integer>(mockBinaryPredicate1());
+		assertTrue(!p.test(9, 2));
+		assertTrue(p.test(9, 1));
+	}
 
-    @Test
-    public void testNotNull() throws Exception {
-        assertNull(BinaryNot.not(null));
-    }
+	@Test
+	public void testEquals() throws Exception {
+		BinaryNot<Object, Object> p = new BinaryNot<Object, Object>(Constant.TRUE);
+		assertEquals(p, p);
+		assertObjectsAreEqual(p, new BinaryNot<Object, Object>(Constant.TRUE));
+		assertObjectsAreEqual(p, BinaryNot.not(Constant.TRUE));
+		assertObjectsAreNotEqual(p, new BinaryNot<Object, Object>(Constant.FALSE));
+		assertObjectsAreNotEqual(p, Constant.TRUE);
+		assertTrue(!p.equals(null));
+	}
 
-    @Test
-    public void testNotNotNull() throws Exception {
-        assertNotNull(BinaryNot.not(Constant.truePredicate()));
-    }
+	@Test
+	public void testNotNull() throws Exception {
+		assertNull(BinaryNot.not(null));
+	}
 
-    // Classes
-    // ------------------------------------------------------------------------
-    
-    class IsSumGreaterThanTen implements BinaryPredicate<Integer, Integer> {
-        public boolean test(Integer left, Integer right) {
-            return left+right > 10;
-        }
-        
-    }
+	@Test
+	public void testNotNotNull() throws Exception {
+		assertNotNull(BinaryNot.not(Constant.truePredicate()));
+	}
+
+	// Classes
+	// ------------------------------------------------------------------------
+
 }

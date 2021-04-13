@@ -1,0 +1,44 @@
+
+*****************************************************
+Summary
+-------
+Generated at: 2021-02-18T01:34:39-05:00
+
+Notes: 3
+Binaries: 2
+Archives: 0
+Standards: 13
+
+Apache Licensed: 13
+Generated Documents: 0
+
+JavaDocs are generated, thus a license header is optional.
+Generated files do not require license headers.
+
+0 Unknown Licenses
+
+*****************************************************
+  Files with Apache License headers will be marked AL
+  Binary files (which do not require any license headers) will be marked B
+  Compressed archives will be marked A
+  Notices, licenses etc. will be marked N
+  AL    .github/dependabot.yml
+  N     LICENSE.txt
+  N     NOTICE.txt
+  AL    pom.xml
+  N     RELEASE-NOTES.txt
+  AL    src/changes/changes.xml
+  AL    src/conf/checkstyle.properties
+  AL    src/conf/jdepend.properties
+  B     src/site/resources/images/functor-logo-white.png
+  B     src/site/resources/images/functor-logo-white.xcf
+  AL    src/site/site.xml
+  AL    src/site/xdoc/aggregator.xml
+  AL    src/site/xdoc/building.xml
+  AL    src/site/xdoc/download_functor.xml
+  AL    src/site/xdoc/examples.xml
+  AL    src/site/xdoc/index.xml
+  AL    src/site/xdoc/issue-tracking.xml
+  AL    src/site/xdoc/mail-lists.xml
+ 
+*****************************************************

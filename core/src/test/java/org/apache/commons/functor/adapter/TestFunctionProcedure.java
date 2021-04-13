@@ -20,6 +20,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.apache.commons.functor.BaseFunctorTest;
 import org.apache.commons.functor.Function;
@@ -33,49 +37,45 @@ import org.junit.Test;
  */
 public class TestFunctionProcedure extends BaseFunctorTest {
 
-    // Functor Testing Framework
-    // ------------------------------------------------------------------------
+	// Functor Testing Framework
+	// ------------------------------------------------------------------------
 
-    @Override
-    protected Object makeFunctor() {
-        return new FunctionProcedure<Object>(Constant.of("K"));
-    }
+	@Override
+	protected Object makeFunctor() {
+		return new FunctionProcedure<Object>(Constant.of("K"));
+	}
 
-    // Tests
-    // ------------------------------------------------------------------------
+	// Tests
+	// ------------------------------------------------------------------------
 
-    @Test
-    public void testRun() throws Exception {
-        class EvaluateCounter implements Function<Object, Integer> {
-            int count = 0;
-            public Integer evaluate(Object a) { return Integer.valueOf(count++); }
-        }
-        EvaluateCounter counter = new EvaluateCounter();
-        Procedure<Object> p = new FunctionProcedure<Object>(counter);
-        assertEquals(0,counter.count);
-        p.run(null);
-        assertEquals(1,counter.count);
-        p.run("x");
-        assertEquals(2,counter.count);
-    }
+	@Test
+	public void testRun() throws Exception {
+		Function<Object, Integer> counter = mock(Function.class);
+		Procedure<Object> p = new FunctionProcedure<Object>(counter);
+		verify(counter, times(0)).evaluate(any());
+		p.run(null);
+		verify(counter, times(1)).evaluate(any());
+		p.run("x");
+		verify(counter, times(2)).evaluate(any());
+	}
 
-    @Test
-    public void testEquals() throws Exception {
-        Procedure<Object> p = new FunctionProcedure<Object>(Constant.of("K"));
-        assertEquals(p,p);
-        assertObjectsAreEqual(p,new FunctionProcedure<Object>(Constant.of("K")));
-        assertObjectsAreNotEqual(p,NoOp.INSTANCE);
-        assertObjectsAreNotEqual(p,new FunctionProcedure<Object>(Constant.of("J")));
-        assertTrue(!p.equals(null));
-    }
+	@Test
+	public void testEquals() throws Exception {
+		Procedure<Object> p = new FunctionProcedure<Object>(Constant.of("K"));
+		assertEquals(p, p);
+		assertObjectsAreEqual(p, new FunctionProcedure<Object>(Constant.of("K")));
+		assertObjectsAreNotEqual(p, NoOp.INSTANCE);
+		assertObjectsAreNotEqual(p, new FunctionProcedure<Object>(Constant.of("J")));
+		assertTrue(!p.equals(null));
+	}
 
-    @Test
-    public void testAdaptNull() throws Exception {
-        assertNull(FunctionProcedure.adapt(null));
-    }
+	@Test
+	public void testAdaptNull() throws Exception {
+		assertNull(FunctionProcedure.adapt(null));
+	}
 
-    @Test
-    public void testAdapt() throws Exception {
-        assertNotNull(FunctionProcedure.adapt(Constant.of("K")));
-    }
+	@Test
+	public void testAdapt() throws Exception {
+		assertNotNull(FunctionProcedure.adapt(Constant.of("K")));
+	}
 }

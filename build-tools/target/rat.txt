@@ -1,0 +1,181 @@
+
+*****************************************************
+Summary
+-------
+Generated at: 2021-03-16T21:58:46-04:00
+
+Notes: 0
+Binaries: 0
+Archives: 2
+Standards: 19
+
+Apache Licensed: 14
+Generated Documents: 0
+
+JavaDocs are generated, thus a license header is optional.
+Generated files do not require license headers.
+
+5 Unknown Licenses
+
+*****************************************************
+
+Files with unapproved licenses:
+
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/.project
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/antrun/build-main.xml
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/maven-archiver/pom.properties
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/osgi/MANIFEST.MF
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/rat.txt
+
+*****************************************************
+
+Archives:
+
+ + D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/commons-functor-build-tools-1.0-SNAPSHOT-sources.jar
+ 
+ + D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/commons-functor-build-tools-1.0-SNAPSHOT.jar
+ 
+*****************************************************
+  Files with Apache License headers will be marked AL
+  Binary files (which do not require any license headers) will be marked B
+  Compressed archives will be marked A
+  Notices, licenses etc. will be marked N
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/.project
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/pom.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/src/main/resources/org/apache/commons/functor/checkstyle-suppressions.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/src/main/resources/org/apache/commons/functor/checkstyle.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/src/main/resources/org/apache/commons/functor/fb-excludes.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/src/main/resources/org/apache/commons/functor/license-header.txt
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/antrun/build-main.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/classes/org/apache/commons/functor/checkstyle-suppressions.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/classes/org/apache/commons/functor/checkstyle.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/classes/org/apache/commons/functor/fb-excludes.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/classes/org/apache/commons/functor/license-header.txt
+  A     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/commons-functor-build-tools-1.0-SNAPSHOT-sources.jar
+  A     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/commons-functor-build-tools-1.0-SNAPSHOT.jar
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/maven-archiver/pom.properties
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/osgi/MANIFEST.MF
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/rat.txt
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/pom.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/checkstyle-suppressions.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/checkstyle.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/fb-excludes.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/license-header.txt
+ 
+*****************************************************
+
+ Printing headers for text files without a valid license header...
+ 
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/.project
+=====================================================
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>commons-functor-build-tools</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.pde.PluginNature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+	</natures>
+</projectDescription>
+
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/antrun/build-main.xml
+=====================================================
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <copy todir="D:\projects\testing_auto_refactoring\commons-projects\commons-functor\build-tools\target/apidocs/META-INF">
+    <fileset dir="D:\projects\testing_auto_refactoring\commons-projects\commons-functor\build-tools">
+      <include name="LICENSE.txt"/>
+      <include name="NOTICE.txt"/>
+      <include name="LICENSE"/>
+      <include name="NOTICE"/>
+    </fileset>
+  </copy>
+</target>
+</project>
+
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/maven-archiver/pom.properties
+=====================================================
+artifactId=commons-functor-build-tools
+groupId=org.apache.commons
+version=1.0-SNAPSHOT
+
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/osgi/MANIFEST.MF
+=====================================================
+Manifest-Version: 1.0
+Bnd-LastModified: 1614058907279
+Build-Jdk-Spec: 12
+Bundle-Description: Provide common setup, from http://maven.apache.org/p
+ lugins/maven-checkstyle-plugin/examples/multi-module-config.html
+Bundle-DocURL: http://commons.apache.org/proper/commons-functor/commons-
+ functor-build-tools/
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: Apache Commons Functor Build Tools
+Bundle-SymbolicName: org.apache.commons.commons-functor-build-tools
+Bundle-Vendor: The Apache Software Foundation
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.apache.commons.functor;version="1.0.0.SNAPSHOT"
+Include-Resource: org/apache/commons/functor/checkstyle-suppressions.xml
+ =src/main/resources/org/apache/commons/functor/checkstyle-suppressions.
+ xml,org/apache/commons/functor/checkstyle.xml=src/main/resources/org/ap
+ ache/commons/functor/checkstyle.xml,org/apache/commons/functor/fb-exclu
+ des.xml=src/main/resources/org/apache/commons/functor/fb-excludes.xml,o
+ rg/apache/commons/functor/license-header.txt=src/main/resources/org/apa
+ che/commons/functor/license-header.txt
+Tool: Bnd-5.1.2.202007211702
+
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/bin/target/rat.txt
+=====================================================
+
+*****************************************************
+Summary
+-------
+Generated at: 2021-02-21T13:29:22-05:00
+
+Notes: 0
+Binaries: 0
+Archives: 0
+Standards: 5
+
+Apache Licensed: 5
+Generated Documents: 0
+
+JavaDocs are generated, thus a license header is optional.
+Generated files do not require license headers.
+
+0 Unknown Licenses
+
+*****************************************************
+  Files with Apache License headers will be marked AL
+  Binary files (which do not require any license headers) will be marked B
+  Compressed archives will be marked A
+  Notices, licenses etc. will be marked N
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/pom.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/checkstyle-suppressions.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/checkstyle.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/fb-excludes.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/build-tools/src/main/resources/org/apache/commons/functor/license-header.txt
+ 
+*****************************************************

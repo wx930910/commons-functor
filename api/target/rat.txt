@@ -1,0 +1,248 @@
+
+*****************************************************
+Summary
+-------
+Generated at: 2021-03-16T21:58:44-04:00
+
+Notes: 0
+Binaries: 14
+Archives: 2
+Standards: 23
+
+Apache Licensed: 16
+Generated Documents: 0
+
+JavaDocs are generated, thus a license header is optional.
+Generated files do not require license headers.
+
+7 Unknown Licenses
+
+*****************************************************
+
+Files with unapproved licenses:
+
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/.project
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/antrun/build-main.xml
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/maven-archiver/pom.properties
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/osgi/MANIFEST.MF
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/rat.txt
+
+*****************************************************
+
+Archives:
+
+ + D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/commons-functor-api-1.0-SNAPSHOT-sources.jar
+ 
+ + D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/commons-functor-api-1.0-SNAPSHOT.jar
+ 
+*****************************************************
+  Files with Apache License headers will be marked AL
+  Binary files (which do not require any license headers) will be marked B
+  Compressed archives will be marked A
+  Notices, licenses etc. will be marked N
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/.project
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/pom.xml
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/BinaryFunction.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/BinaryFunctor.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/BinaryPredicate.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/BinaryProcedure.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/Function.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/Functor.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/NullaryFunction.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/NullaryFunctor.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/NullaryPredicate.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/NullaryProcedure.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/package-info.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/Predicate.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/Procedure.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/UnaryFunctor.class
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/antrun/build-main.xml
+  A     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/commons-functor-api-1.0-SNAPSHOT-sources.jar
+  A     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/commons-functor-api-1.0-SNAPSHOT.jar
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/maven-archiver/pom.properties
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/osgi/MANIFEST.MF
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/rat.txt
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/pom.xml
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/BinaryFunction.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/BinaryFunctor.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/BinaryPredicate.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/BinaryProcedure.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/Function.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/Functor.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/NullaryFunction.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/NullaryFunctor.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/NullaryPredicate.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/NullaryProcedure.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/package-info.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/Predicate.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/Procedure.java
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/src/main/java/org/apache/commons/functor/UnaryFunctor.java
+ 
+*****************************************************
+
+ Printing headers for text files without a valid license header...
+ 
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/.project
+=====================================================
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>commons-functor-api</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.pde.PluginNature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+	</natures>
+</projectDescription>
+
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/antrun/build-main.xml
+=====================================================
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <copy todir="D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\target/apidocs/META-INF">
+    <fileset dir="D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api">
+      <include name="LICENSE.txt"/>
+      <include name="NOTICE.txt"/>
+      <include name="LICENSE"/>
+      <include name="NOTICE"/>
+    </fileset>
+  </copy>
+</target>
+</project>
+
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/maven-archiver/pom.properties
+=====================================================
+artifactId=commons-functor-api
+groupId=org.apache.commons
+version=1.0-SNAPSHOT
+
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+=====================================================
+org\apache\commons\functor\Function.class
+org\apache\commons\functor\Predicate.class
+org\apache\commons\functor\Procedure.class
+org\apache\commons\functor\NullaryFunction.class
+org\apache\commons\functor\BinaryProcedure.class
+org\apache\commons\functor\BinaryPredicate.class
+org\apache\commons\functor\Functor.class
+org\apache\commons\functor\BinaryFunctor.class
+org\apache\commons\functor\NullaryPredicate.class
+org\apache\commons\functor\NullaryProcedure.class
+org\apache\commons\functor\BinaryFunction.class
+org\apache\commons\functor\NullaryFunctor.class
+org\apache\commons\functor\UnaryFunctor.class
+
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+=====================================================
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\UnaryFunctor.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\NullaryPredicate.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\BinaryFunctor.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\BinaryProcedure.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\Function.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\Functor.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\NullaryFunction.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\NullaryFunctor.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\Procedure.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\BinaryPredicate.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\package-info.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\BinaryFunction.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\NullaryProcedure.java
+D:\projects\testing_auto_refactoring\commons-projects\commons-functor\api\src\main\java\org\apache\commons\functor\Predicate.java
+
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/osgi/MANIFEST.MF
+=====================================================
+Manifest-Version: 1.0
+Bnd-LastModified: 1613932154247
+Build-Jdk-Spec: 12
+Bundle-Description: Provide the basic APIs
+Bundle-DocURL: http://commons.apache.org/proper/commons-functor/commons-
+ functor-api/
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: Apache Commons Functor API
+Bundle-SymbolicName: org.apache.commons.commons-functor-api
+Bundle-Vendor: The Apache Software Foundation
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.apache.commons.functor;version="1.0.0.SNAPSHOT"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.5))"
+Tool: Bnd-5.1.2.202007211702
+
+=====================================================
+== File: D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/rat.txt
+=====================================================
+
+*****************************************************
+Summary
+-------
+Generated at: 2021-02-21T13:29:13-05:00
+
+Notes: 0
+Binaries: 14
+Archives: 0
+Standards: 18
+
+Apache Licensed: 16
+Generated Documents: 0
+
+JavaDocs are generated, thus a license header is optional.
+Generated files do not require license headers.
+
+2 Unknown Licenses
+
+*****************************************************
+
+Files with unapproved licenses:
+
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/osgi/MANIFEST.MF
+  D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/rat.txt
+
+*****************************************************
+
+*****************************************************
+  Files with Apache License headers will be marked AL
+  Binary files (which do not require any license headers) will be marked B
+  Compressed archives will be marked A
+  Notices, licenses etc. will be marked N
+  AL    D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/pom.xml
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/BinaryFunction.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/BinaryFunctor.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/BinaryPredicate.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/BinaryProcedure.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/Function.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/Functor.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/NullaryFunction.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/NullaryFunctor.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/NullaryPredicate.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/NullaryProcedure.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/package-info.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/Predicate.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/Procedure.class
+  B     D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/src/main/java/org/apache/commons/functor/UnaryFunctor.class
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/osgi/MANIFEST.MF
+ !????? D:/projects/testing_auto_refactoring/commons-projects/commons-functor/api/bin/target/rat.txt

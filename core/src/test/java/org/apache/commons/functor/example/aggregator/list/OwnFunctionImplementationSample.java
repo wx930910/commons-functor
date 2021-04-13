@@ -16,12 +16,16 @@
  */
 package org.apache.commons.functor.example.aggregator.list;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.util.List;
 
 import org.apache.commons.functor.Function;
 import org.apache.commons.functor.aggregator.ArrayListBackedAggregator;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Shows how to implement own aggregation function with a List-backed
@@ -29,66 +33,53 @@ import static org.junit.Assert.assertEquals;
  * appears in the list or not.
  */
 public class OwnFunctionImplementationSample {
-    @Test
-    public void findValue() throws Exception {
-        // we're looking for 10
-        ArrayListBackedAggregator<Integer> agg = new ArrayListBackedAggregator<Integer>(new OwnFunction(10));
-        int eval = agg.evaluate();
-        assertEquals(eval, -1);
+	public static Function<List<Integer>, Integer> mockFunction1(int valueToFind) {
+		int mockFieldVariableValueToFind;
+		Function<List<Integer>, Integer> mockInstance = mock(Function.class);
+		mockFieldVariableValueToFind = valueToFind;
+		when(mockInstance.evaluate(any(List.class))).thenAnswer((stubInvo) -> {
+			List<Integer> lst = stubInvo.getArgument(0);
+			if (lst == null || lst.size() == 0) {
+				return -1;
+			}
+			for (int i = 0; i < lst.size(); i++) {
+				if (lst.get(i).intValue() == mockFieldVariableValueToFind) {
+					return i;
+				}
+			}
+			return -1;
+		});
+		return mockInstance;
+	}
 
-        agg.add( 1 );
-        eval = agg.evaluate();
-        assertEquals(eval, -1);
+	@Test
+	public void findValue() throws Exception {
+		// we're looking for 10
+		ArrayListBackedAggregator<Integer> agg = new ArrayListBackedAggregator<Integer>(
+				OwnFunctionImplementationSample.mockFunction1(10));
+		int eval = agg.evaluate();
+		assertEquals(eval, -1);
 
-        agg.add( 2 );
-        eval = agg.evaluate();
-        assertEquals(eval, -1);
+		agg.add(1);
+		eval = agg.evaluate();
+		assertEquals(eval, -1);
 
-        agg.add( 10 );
-        eval = agg.evaluate();
-        assertEquals(eval, 2);
-        //function finds FIRST occurence!
-        agg.add( 10 );
-        eval = agg.evaluate();
-        assertEquals(eval, 2);
-        agg.add( 10 );
-        eval = agg.evaluate();
-        assertEquals(eval, 2);
-        agg.add( 10 );
-        eval = agg.evaluate();
-        assertEquals(eval, 2);
-    }
+		agg.add(2);
+		eval = agg.evaluate();
+		assertEquals(eval, -1);
 
-    /**
-     * This function returns the index of the first occurrence in the list of
-     * the given value.
-     */
-    static class OwnFunction implements Function<List<Integer>, Integer> {
-        /** Value to find in the list. */
-        private int valueToFind;
-
-        public OwnFunction(int valueToFind) {
-            this.valueToFind = valueToFind;
-        }
-
-        /**
-         * Search in the list and find the first index of the given value.
-         *
-         * @param lst
-         *            List to search in
-         * @return index of {@link #valueToFind} if found or -1 if value not
-         *         present in the list
-         */
-        public Integer evaluate(List<Integer> lst) {
-            if (lst == null || lst.size() == 0) {
-                return -1;
-            }
-            for (int i = 0; i < lst.size(); i++) {
-                if (lst.get(i).intValue() == valueToFind) {
-                    return i;
-                }
-            }
-            return -1;
-        }
-    }
+		agg.add(10);
+		eval = agg.evaluate();
+		assertEquals(eval, 2);
+		// function finds FIRST occurence!
+		agg.add(10);
+		eval = agg.evaluate();
+		assertEquals(eval, 2);
+		agg.add(10);
+		eval = agg.evaluate();
+		assertEquals(eval, 2);
+		agg.add(10);
+		eval = agg.evaluate();
+		assertEquals(eval, 2);
+	}
 }

@@ -16,20 +16,24 @@
  */
 package org.apache.commons.functor.example.lines;
 
-import org.apache.commons.functor.Predicate;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import org.apache.commons.functor.Predicate;
 
 /**
  * @version $Revision$ $Date$
  */
-public class Contains<T> implements Predicate<T> {
-    public Contains(String str) {
-        this.str = str;
-    }
-
-    public boolean test(T obj) {
-        return null != obj && obj.toString().indexOf(str) != -1;
-    }
-
-    private String str = null;
+public class Contains {
+	public static Predicate<String> mockPredicate1(String str) {
+		String[] mockFieldVariableStr = new String[] { null };
+		Predicate<String> mockInstance = mock(Predicate.class);
+		mockFieldVariableStr[0] = str;
+		when(mockInstance.test(any(String.class))).thenAnswer((stubInvo) -> {
+			String obj = stubInvo.getArgument(0);
+			return null != obj && obj.toString().indexOf(mockFieldVariableStr[0]) != -1;
+		});
+		return mockInstance;
+	}
 }

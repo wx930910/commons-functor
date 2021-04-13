@@ -20,6 +20,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.apache.commons.functor.BaseFunctorTest;
 import org.apache.commons.functor.NullaryFunction;
@@ -29,53 +32,50 @@ import org.apache.commons.functor.core.NoOp;
 import org.junit.Test;
 
 /**
- * @version $Revision: 1365377 $ $Date: 2012-07-24 21:59:23 -0300 (Tue, 24 Jul 2012) $
+ * @version $Revision: 1365377 $ $Date: 2012-07-24 21:59:23 -0300 (Tue, 24 Jul
+ *          2012) $
  */
 public class TestNullaryFunctionNullaryProcedure extends BaseFunctorTest {
 
-    // Functor Testing Framework
-    // ------------------------------------------------------------------------
+	// Functor Testing Framework
+	// ------------------------------------------------------------------------
 
-    @Override
-    protected Object makeFunctor() {
-        return new NullaryFunctionNullaryProcedure(Constant.of("K"));
-    }
+	@Override
+	protected Object makeFunctor() {
+		return new NullaryFunctionNullaryProcedure(Constant.of("K"));
+	}
 
-    // Tests
-    // ------------------------------------------------------------------------
+	// Tests
+	// ------------------------------------------------------------------------
 
-    @Test
-    public void testRun() throws Exception {
-        class EvaluateCounter implements NullaryFunction<Integer> {
-            int count = 0;
-            public Integer evaluate() { return Integer.valueOf(count++); }
-        }
-        EvaluateCounter counter = new EvaluateCounter();
-        NullaryProcedure p = new NullaryFunctionNullaryProcedure(counter);
-        assertEquals(0,counter.count);
-        p.run();
-        assertEquals(1,counter.count);
-        p.run();
-        assertEquals(2,counter.count);
-    }
+	@Test
+	public void testRun() throws Exception {
+		NullaryFunction<Integer> counter = mock(NullaryFunction.class);
+		NullaryProcedure p = new NullaryFunctionNullaryProcedure(counter);
+		verify(counter, times(0)).evaluate();
+		p.run();
+		verify(counter, times(1)).evaluate();
+		p.run();
+		verify(counter, times(2)).evaluate();
+	}
 
-    @Test
-    public void testEquals() throws Exception {
-        NullaryProcedure p = new NullaryFunctionNullaryProcedure(Constant.of("K"));
-        assertEquals(p,p);
-        assertObjectsAreEqual(p,new NullaryFunctionNullaryProcedure(Constant.of("K")));
-        assertObjectsAreNotEqual(p,NoOp.INSTANCE);
-        assertObjectsAreNotEqual(p,new NullaryFunctionNullaryProcedure(Constant.of("J")));
-        assertTrue(!p.equals(null));
-    }
+	@Test
+	public void testEquals() throws Exception {
+		NullaryProcedure p = new NullaryFunctionNullaryProcedure(Constant.of("K"));
+		assertEquals(p, p);
+		assertObjectsAreEqual(p, new NullaryFunctionNullaryProcedure(Constant.of("K")));
+		assertObjectsAreNotEqual(p, NoOp.INSTANCE);
+		assertObjectsAreNotEqual(p, new NullaryFunctionNullaryProcedure(Constant.of("J")));
+		assertTrue(!p.equals(null));
+	}
 
-    @Test
-    public void testAdaptNull() throws Exception {
-        assertNull(NullaryFunctionNullaryProcedure.adapt(null));
-    }
+	@Test
+	public void testAdaptNull() throws Exception {
+		assertNull(NullaryFunctionNullaryProcedure.adapt(null));
+	}
 
-    @Test
-    public void testAdapt() throws Exception {
-        assertNotNull(NullaryFunctionNullaryProcedure.adapt(Constant.of("K")));
-    }
+	@Test
+	public void testAdapt() throws Exception {
+		assertNotNull(NullaryFunctionNullaryProcedure.adapt(Constant.of("K")));
+	}
 }

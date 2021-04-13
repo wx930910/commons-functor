@@ -17,6 +17,10 @@
 
 package org.apache.commons.functor.example.aggregator.nostore;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.apache.commons.functor.BinaryFunction;
 import org.apache.commons.functor.aggregator.AbstractNoStoreAggregator;
 
@@ -25,34 +29,33 @@ import org.apache.commons.functor.aggregator.AbstractNoStoreAggregator;
  * {@link AbstractNoStoreAggregator}.
  */
 public class AggregatedFunctionSample {
-    /**
-     * Uses a custom function together with a nostore aggregator to provide a
-     * continuous logical OR in between all the values added to the aggregator.
-     */
-    public void useOwnFunction() throws Exception {
-        AbstractNoStoreAggregator<Boolean> or = new AbstractNoStoreAggregator<Boolean>( new OwnBinaryFunction() ) {
-            @Override
-            protected Boolean initialValue() {
-                return false;
-            }
-        };
-        or.add( false );
-        System.out.println( "OR : " + or.evaluate() );
-        or.add( true );
-        System.out.println( "OR : " + or.evaluate() );
-        or.add( false );
-        System.out.println( "OR : " + or.evaluate() );
-    }
+	public static BinaryFunction<Boolean, Boolean, Boolean> mockBinaryFunction1() {
+		BinaryFunction<Boolean, Boolean, Boolean> mockInstance = mock(BinaryFunction.class);
+		when(mockInstance.evaluate(any(Boolean.class), any(Boolean.class))).thenAnswer((stubInvo) -> {
+			Boolean left = stubInvo.getArgument(0);
+			Boolean right = stubInvo.getArgument(1);
+			return left.booleanValue() || right.booleanValue();
+		});
+		return mockInstance;
+	}
 
-    /**
-     * This class implements a logical OR: it OR's the 2 parameters passed in
-     * and returns the result.
-     * (There are similar implementations already in functor, this is just to
-     * be used as an example for doing this with a nostore aggregator.
-     */
-    static class OwnBinaryFunction implements BinaryFunction<Boolean, Boolean, Boolean> {
-        public Boolean evaluate(Boolean left, Boolean right) {
-            return left.booleanValue() || right.booleanValue();
-        }
-    }
+	/**
+	 * Uses a custom function together with a nostore aggregator to provide a
+	 * continuous logical OR in between all the values added to the aggregator.
+	 */
+	public void useOwnFunction() throws Exception {
+		AbstractNoStoreAggregator<Boolean> or = new AbstractNoStoreAggregator<Boolean>(
+				AggregatedFunctionSample.mockBinaryFunction1()) {
+			@Override
+			protected Boolean initialValue() {
+				return false;
+			}
+		};
+		or.add(false);
+		System.out.println("OR : " + or.evaluate());
+		or.add(true);
+		System.out.println("OR : " + or.evaluate());
+		or.add(false);
+		System.out.println("OR : " + or.evaluate());
+	}
 }
