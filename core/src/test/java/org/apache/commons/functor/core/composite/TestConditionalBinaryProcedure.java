@@ -18,6 +18,10 @@ package org.apache.commons.functor.core.composite;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.apache.commons.functor.BaseFunctorTest;
 import org.apache.commons.functor.BinaryProcedure;
@@ -31,77 +35,59 @@ import org.junit.Test;
  */
 public class TestConditionalBinaryProcedure extends BaseFunctorTest {
 
-    // Functor Testing Framework
-    // ------------------------------------------------------------------------
+	// Functor Testing Framework
+	// ------------------------------------------------------------------------
 
-    @Override
-    protected Object makeFunctor() {
-        return new ConditionalBinaryProcedure<Object, Object>(
-            Constant.TRUE,
-            NoOp.instance(),
-            NoOp.instance());
-    }
+	public static BinaryProcedure<Object, Object> mockBinaryProcedure1() {
+		BinaryProcedure<Object, Object> mockInstance = mock(BinaryProcedure.class);
+		return mockInstance;
+	}
 
-    // Tests
-    // ------------------------------------------------------------------------
+	@Override
+	protected Object makeFunctor() {
+		return new ConditionalBinaryProcedure<Object, Object>(Constant.TRUE, NoOp.instance(), NoOp.instance());
+	}
 
-    @Test
-    public void testRun() throws Exception {
-        RunCounter left = new RunCounter();
-        RunCounter right = new RunCounter();
-        ConditionalBinaryProcedure<Boolean, Object> p = new ConditionalBinaryProcedure<Boolean, Object>(
-            LeftIdentity.PREDICATE,
-            left,
-            right);
-        assertEquals(0,left.count);
-        assertEquals(0,right.count);
-        p.run(Boolean.TRUE, null);
-        assertEquals(1,left.count);
-        assertEquals(0,right.count);
-        p.run(Boolean.FALSE, null);
-        assertEquals(1,left.count);
-        assertEquals(1,right.count);
-        p.run(Boolean.TRUE, null);
-        assertEquals(2,left.count);
-        assertEquals(1,right.count);
-    }
+	// Tests
+	// ------------------------------------------------------------------------
 
-    @Test
-    public void testEquals() throws Exception {
-        ConditionalBinaryProcedure<?, ?> p = new ConditionalBinaryProcedure<Boolean, Object>(
-            LeftIdentity.PREDICATE,
-            NoOp.instance(),
-            NoOp.instance());
-        assertEquals(p,p);
-        assertObjectsAreEqual(p,new ConditionalBinaryProcedure<Boolean, Object>(
-            LeftIdentity.PREDICATE,
-            NoOp.instance(),
-            NoOp.instance()));
-        assertObjectsAreNotEqual(p,new ConditionalBinaryProcedure<Object, Object>(
-            Constant.TRUE,
-            NoOp.instance(),
-            NoOp.instance()));
-        assertObjectsAreNotEqual(p,new ConditionalBinaryProcedure<Boolean, Object>(
-            LeftIdentity.PREDICATE,
-            new RunCounter(),
-            NoOp.instance()));
-        assertObjectsAreNotEqual(p,new ConditionalBinaryProcedure<Boolean, Object>(
-                LeftIdentity.PREDICATE,
-            NoOp.instance(),
-            new RunCounter()));
-        assertObjectsAreNotEqual(p,new ConditionalBinaryProcedure<Boolean, Object>(
-            Constant.TRUE,
-            NoOp.instance()));
-        assertTrue(!p.equals(null));
-    }
+	@Test
+	public void testRun() throws Exception {
+		BinaryProcedure<Object, Object> left = mock(BinaryProcedure.class);
+		BinaryProcedure<Object, Object> right = mock(BinaryProcedure.class);
+		ConditionalBinaryProcedure<Boolean, Object> p = new ConditionalBinaryProcedure<Boolean, Object>(
+				LeftIdentity.PREDICATE, left, right);
+		verify(left, times(0)).run(any(Object.class), any(Object.class));
+		verify(right, times(0)).run(any(Object.class), any(Object.class));
+		p.run(Boolean.TRUE, null);
+		verify(left, times(1)).run(any(Object.class), any(Object.class));
+		verify(right, times(0)).run(any(Object.class), any(Object.class));
+		p.run(Boolean.FALSE, null);
+		verify(left, times(1)).run(any(Object.class), any(Object.class));
+		verify(right, times(1)).run(any(Object.class), any(Object.class));
+		p.run(Boolean.TRUE, null);
+		verify(left, times(2)).run(any(Object.class), any(Object.class));
+		verify(right, times(1)).run(any(Object.class), any(Object.class));
+	}
 
-    // Classes
-    // ------------------------------------------------------------------------
+	@Test
+	public void testEquals() throws Exception {
+		ConditionalBinaryProcedure<?, ?> p = new ConditionalBinaryProcedure<Boolean, Object>(LeftIdentity.PREDICATE,
+				NoOp.instance(), NoOp.instance());
+		assertEquals(p, p);
+		assertObjectsAreEqual(p, new ConditionalBinaryProcedure<Boolean, Object>(LeftIdentity.PREDICATE,
+				NoOp.instance(), NoOp.instance()));
+		assertObjectsAreNotEqual(p,
+				new ConditionalBinaryProcedure<Object, Object>(Constant.TRUE, NoOp.instance(), NoOp.instance()));
+		assertObjectsAreNotEqual(p, new ConditionalBinaryProcedure<Boolean, Object>(LeftIdentity.PREDICATE,
+				TestConditionalBinaryProcedure.mockBinaryProcedure1(), NoOp.instance()));
+		assertObjectsAreNotEqual(p, new ConditionalBinaryProcedure<Boolean, Object>(LeftIdentity.PREDICATE,
+				NoOp.instance(), TestConditionalBinaryProcedure.mockBinaryProcedure1()));
+		assertObjectsAreNotEqual(p, new ConditionalBinaryProcedure<Boolean, Object>(Constant.TRUE, NoOp.instance()));
+		assertTrue(!p.equals(null));
+	}
 
-    static class RunCounter implements BinaryProcedure<Object, Object> {
-        public void run(Object left, Object right) {
-            count++;
-        }
-        public int count = 0;
-    }
+	// Classes
+	// ------------------------------------------------------------------------
+
 }

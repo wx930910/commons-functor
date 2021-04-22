@@ -20,6 +20,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.apache.commons.functor.BaseFunctorTest;
 import org.apache.commons.functor.BinaryFunction;
@@ -33,49 +37,45 @@ import org.junit.Test;
  */
 public class TestBinaryFunctionBinaryProcedure extends BaseFunctorTest {
 
-    // Functor Testing Framework
-    // ------------------------------------------------------------------------
+	// Functor Testing Framework
+	// ------------------------------------------------------------------------
 
-    @Override
-    protected Object makeFunctor() {
-        return new BinaryFunctionBinaryProcedure<Object, Object>(Constant.of("K"));
-    }
+	@Override
+	protected Object makeFunctor() {
+		return new BinaryFunctionBinaryProcedure<Object, Object>(Constant.of("K"));
+	}
 
-    // Tests
-    // ------------------------------------------------------------------------
+	// Tests
+	// ------------------------------------------------------------------------
 
-    @Test
-    public void testRun() throws Exception {
-        class EvaluateCounter implements BinaryFunction<Object, Object, Integer> {
-            int count = 0;
-            public Integer evaluate(Object a, Object b) { return Integer.valueOf(count++); }
-        }
-        EvaluateCounter counter = new EvaluateCounter();
-        BinaryProcedure<Object, Object> p = new BinaryFunctionBinaryProcedure<Object, Object>(counter);
-        assertEquals(0,counter.count);
-        p.run(null,null);
-        assertEquals(1,counter.count);
-        p.run("x","y");
-        assertEquals(2,counter.count);
-    }
+	@Test
+	public void testRun() throws Exception {
+		BinaryFunction<Object, Object, Integer> counter = mock(BinaryFunction.class);
+		BinaryProcedure<Object, Object> p = new BinaryFunctionBinaryProcedure<Object, Object>(counter);
+		verify(counter, times(0)).evaluate(any(Object.class), any(Object.class));
+		p.run(null, null);
+		verify(counter, times(1)).evaluate(any(Object.class), any(Object.class));
+		p.run("x", "y");
+		verify(counter, times(2)).evaluate(any(Object.class), any(Object.class));
+	}
 
-    @Test
-    public void testEquals() throws Exception {
-        BinaryProcedure<Object, Object> p = new BinaryFunctionBinaryProcedure<Object, Object>(Constant.of("K"));
-        assertEquals(p,p);
-        assertObjectsAreEqual(p,new BinaryFunctionBinaryProcedure<Object, Object>(Constant.of("K")));
-        assertObjectsAreNotEqual(p,new NoOp());
-        assertObjectsAreNotEqual(p,new BinaryFunctionBinaryProcedure<Object, Object>(Constant.of("J")));
-        assertTrue(!p.equals(null));
-    }
+	@Test
+	public void testEquals() throws Exception {
+		BinaryProcedure<Object, Object> p = new BinaryFunctionBinaryProcedure<Object, Object>(Constant.of("K"));
+		assertEquals(p, p);
+		assertObjectsAreEqual(p, new BinaryFunctionBinaryProcedure<Object, Object>(Constant.of("K")));
+		assertObjectsAreNotEqual(p, new NoOp());
+		assertObjectsAreNotEqual(p, new BinaryFunctionBinaryProcedure<Object, Object>(Constant.of("J")));
+		assertTrue(!p.equals(null));
+	}
 
-    @Test
-    public void testAdaptNull() throws Exception {
-        assertNull(BinaryFunctionBinaryProcedure.adapt(null));
-    }
+	@Test
+	public void testAdaptNull() throws Exception {
+		assertNull(BinaryFunctionBinaryProcedure.adapt(null));
+	}
 
-    @Test
-    public void testAdapt() throws Exception {
-        assertNotNull(BinaryFunctionBinaryProcedure.adapt(Constant.of("K")));
-    }
+	@Test
+	public void testAdapt() throws Exception {
+		assertNotNull(BinaryFunctionBinaryProcedure.adapt(Constant.of("K")));
+	}
 }

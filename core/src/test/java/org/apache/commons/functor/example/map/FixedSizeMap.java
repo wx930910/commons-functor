@@ -31,34 +31,36 @@ import org.apache.commons.functor.generator.loop.IteratorToGeneratorAdapter;
  */
 @SuppressWarnings("unchecked")
 public class FixedSizeMap<K, V> extends FunctoredMap<K, V> {
-    public FixedSizeMap(Map<K, V> map) {
-        super(map);
-        setOnPut(new BinaryFunction<Map<K,V>, Object[], V>() {
-            public V evaluate(Map<K,V> map, Object[] b) {
-                K key = (K)Array.get(b,0);
-                V value = (V)Array.get(b,1);
-                if (map.containsKey(key)) {
-                    return map.put(key,value);
-                } else {
-                    throw new IllegalArgumentException();
-                }
-            }
-        });
+	public FixedSizeMap(Map<K, V> map) {
+		super(map);
+		setOnPut(new BinaryFunction<Map<K, V>, Object[], V>() {
+			public V evaluate(Map<K, V> map, Object[] b) {
+				K key = (K) Array.get(b, 0);
+				V value = (V) Array.get(b, 1);
+				if (map.containsKey(key)) {
+					return map.put(key, value);
+				} else {
+					throw new IllegalArgumentException();
+				}
+			}
+		});
 
-        setOnPutAll(new BinaryProcedure<Map<K,V>, Map<K,V>>() {
-            public void run(Map<K,V> a, Map<K,V> b) {
-                Map<K,V> dest = a;
-                Map<K,V> src = b;
+		setOnPutAll(new BinaryProcedure<Map<K, V>, Map<K, V>>() {
+			public void run(Map<K, V> a, Map<K, V> b) {
+				Map<K, V> dest = a;
+				Map<K, V> src = b;
 
-                if (GeneratorContains.instance().test(IteratorToGeneratorAdapter.adapt(src.keySet().iterator()),Not.not(new ContainsKey(dest)))) {
-                    throw new IllegalArgumentException();
-                } else {
-                    dest.putAll(src);
-                }
-            }
-        });
+				if (GeneratorContains.instance().test(IteratorToGeneratorAdapter.adapt(src.keySet().iterator()),
+						Not.not(FunctoredMap.mockPredicate1(dest)))) {
+					throw new IllegalArgumentException();
+				} else {
+					dest.putAll(src);
+				}
+			}
+		});
 
-        setOnRemove(new BinaryProcedureBinaryFunction<Map<K, V>, K, V>((BinaryProcedure<? super Map<K, V>, ? super K>) new Throw<K, V>(new UnsupportedOperationException())));
-        setOnClear(new Throw<K, V>(new UnsupportedOperationException()));
-    }
+		setOnRemove(new BinaryProcedureBinaryFunction<Map<K, V>, K, V>(
+				(BinaryProcedure<? super Map<K, V>, ? super K>) new Throw<K, V>(new UnsupportedOperationException())));
+		setOnClear(new Throw<K, V>(new UnsupportedOperationException()));
+	}
 }

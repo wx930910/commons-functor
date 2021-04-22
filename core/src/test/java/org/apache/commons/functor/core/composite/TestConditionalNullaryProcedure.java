@@ -18,6 +18,9 @@ package org.apache.commons.functor.core.composite;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.apache.commons.functor.BaseFunctorTest;
 import org.apache.commons.functor.NullaryProcedure;
@@ -26,106 +29,79 @@ import org.apache.commons.functor.core.NoOp;
 import org.junit.Test;
 
 /**
- * @version $Revision: 1365329 $ $Date: 2012-07-24 19:34:23 -0300 (Tue, 24 Jul 2012) $
+ * @version $Revision: 1365329 $ $Date: 2012-07-24 19:34:23 -0300 (Tue, 24 Jul
+ *          2012) $
  */
 public class TestConditionalNullaryProcedure extends BaseFunctorTest {
 
-    // Functor Testing Framework
-    // ------------------------------------------------------------------------
+	// Functor Testing Framework
+	// ------------------------------------------------------------------------
 
-    @Override
-    protected Object makeFunctor() {
-        return new ConditionalNullaryProcedure(
-            Constant.TRUE,
-            NoOp.INSTANCE,
-            NoOp.INSTANCE);
-    }
+	public static NullaryProcedure mockNullaryProcedure1() {
+		NullaryProcedure mockInstance = mock(NullaryProcedure.class);
+		return mockInstance;
+	}
 
-    // Tests
-    // ------------------------------------------------------------------------
+	@Override
+	protected Object makeFunctor() {
+		return new ConditionalNullaryProcedure(Constant.TRUE, NoOp.INSTANCE, NoOp.INSTANCE);
+	}
 
-    @Test
-    public void testRun() throws Exception {
-        {
-            RunCounter left = new RunCounter();
-            RunCounter right = new RunCounter();
-            ConditionalNullaryProcedure p = new ConditionalNullaryProcedure(
-                Constant.TRUE,
-                left,
-                right);
-            assertEquals(0,left.count);
-            assertEquals(0,right.count);
-            p.run();
-            assertEquals(1,left.count);
-            assertEquals(0,right.count);
-            p.run();
-            assertEquals(2,left.count);
-            assertEquals(0,right.count);
-            p.run();
-            assertEquals(3,left.count);
-            assertEquals(0,right.count);
-        }
-        {
-            RunCounter left = new RunCounter();
-            RunCounter right = new RunCounter();
-            ConditionalNullaryProcedure p = new ConditionalNullaryProcedure(
-                Constant.FALSE,
-                left,
-                right);
-            assertEquals(0,left.count);
-            assertEquals(0,right.count);
-            p.run();
-            assertEquals(0,left.count);
-            assertEquals(1,right.count);
-            p.run();
-            assertEquals(0,left.count);
-            assertEquals(2,right.count);
-            p.run();
-            assertEquals(0,left.count);
-            assertEquals(3,right.count);
-        }
-    }
+	// Tests
+	// ------------------------------------------------------------------------
 
-    @Test
-    public void testEquals() throws Exception {
-        ConditionalNullaryProcedure p = new ConditionalNullaryProcedure(
-            Constant.FALSE,
-            NoOp.INSTANCE,
-            NoOp.INSTANCE);
-        assertEquals(p,p);
-        assertObjectsAreEqual(p,new ConditionalNullaryProcedure(
-            Constant.FALSE,
-            NoOp.INSTANCE,
-            NoOp.INSTANCE));
-        assertObjectsAreNotEqual(p,new ConditionalNullaryProcedure(
-            Constant.TRUE,
-            NoOp.INSTANCE,
-            NoOp.INSTANCE));
-        assertObjectsAreNotEqual(p,new ConditionalNullaryProcedure(
-            Constant.TRUE,
-            NoOp.INSTANCE,
-            NoOp.INSTANCE));
-        assertObjectsAreNotEqual(p,new ConditionalNullaryProcedure(
-            Constant.FALSE,
-            new RunCounter(),
-            NoOp.INSTANCE));
-        assertObjectsAreNotEqual(p,new ConditionalNullaryProcedure(
-            Constant.FALSE,
-            NoOp.INSTANCE,
-            new RunCounter()));
-        assertObjectsAreNotEqual(p,new ConditionalNullaryProcedure(
-            Constant.TRUE,
-            NoOp.INSTANCE));
-        assertTrue(!p.equals(null));
-    }
+	@Test
+	public void testRun() throws Exception {
+		{
+			NullaryProcedure left = mock(NullaryProcedure.class);
+			NullaryProcedure right = mock(NullaryProcedure.class);
+			ConditionalNullaryProcedure p = new ConditionalNullaryProcedure(Constant.TRUE, left, right);
+			verify(left, times(0)).run();
+			verify(right, times(0)).run();
+			p.run();
+			verify(left, times(1)).run();
+			verify(right, times(0)).run();
+			p.run();
+			verify(left, times(2)).run();
+			verify(right, times(0)).run();
+			p.run();
+			verify(left, times(3)).run();
+			verify(right, times(0)).run();
+		}
+		{
+			NullaryProcedure left = mock(NullaryProcedure.class);
+			NullaryProcedure right = mock(NullaryProcedure.class);
+			ConditionalNullaryProcedure p = new ConditionalNullaryProcedure(Constant.FALSE, left, right);
+			verify(left, times(0)).run();
+			verify(right, times(0)).run();
+			p.run();
+			verify(left, times(0)).run();
+			verify(right, times(1)).run();
+			p.run();
+			verify(left, times(0)).run();
+			verify(right, times(2)).run();
+			p.run();
+			verify(left, times(0)).run();
+			verify(right, times(3)).run();
+		}
+	}
 
-    // Classes
-    // ------------------------------------------------------------------------
+	@Test
+	public void testEquals() throws Exception {
+		ConditionalNullaryProcedure p = new ConditionalNullaryProcedure(Constant.FALSE, NoOp.INSTANCE, NoOp.INSTANCE);
+		assertEquals(p, p);
+		assertObjectsAreEqual(p, new ConditionalNullaryProcedure(Constant.FALSE, NoOp.INSTANCE, NoOp.INSTANCE));
+		assertObjectsAreNotEqual(p, new ConditionalNullaryProcedure(Constant.TRUE, NoOp.INSTANCE, NoOp.INSTANCE));
+		assertObjectsAreNotEqual(p, new ConditionalNullaryProcedure(Constant.TRUE, NoOp.INSTANCE, NoOp.INSTANCE));
+		assertObjectsAreNotEqual(p, new ConditionalNullaryProcedure(Constant.FALSE,
+				TestConditionalNullaryProcedure.mockNullaryProcedure1(), NoOp.INSTANCE));
+		assertObjectsAreNotEqual(p, new ConditionalNullaryProcedure(Constant.FALSE, NoOp.INSTANCE,
+				TestConditionalNullaryProcedure.mockNullaryProcedure1()));
+		assertObjectsAreNotEqual(p, new ConditionalNullaryProcedure(Constant.TRUE, NoOp.INSTANCE));
+		assertTrue(!p.equals(null));
+	}
 
-    static class RunCounter implements NullaryProcedure {
-        public void run() {
-            count++;
-        }
-        public int count = 0;
-    }
+	// Classes
+	// ------------------------------------------------------------------------
+
 }
